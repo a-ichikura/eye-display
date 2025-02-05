@@ -65,9 +65,15 @@ The following table shows the correspondence between the data and the emotional 
 |---|---|
 |0| normal |
 |1| blink |
-|2| surprised |
+|2| shining-1 |
 |3| sleepy |
-|4| angry |
-|5| sad / troubled |
+|4| seriout |
+|5| sad |
 |6| happy |
+|7| regrettable-1 |
+|8| regrettable-2 |
+|9| boring |
+|10| heart |
+|11| spinning |
+|12| shining-2 |
 
