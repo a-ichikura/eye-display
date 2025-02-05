@@ -22,7 +22,8 @@ const int image_height = 139;
 const char path_image_eyeball[] = "/sclera.png";
 
 //const char path_image_iris_right[] = "/iris_right.png";
-const char path_image_iris_right[] = "/iris.png";
+//const char path_image_iris_right[] = "/iris.png";
+const char path_image_iris_right[] = "/iris-toshima.png";
 const char path_image_upperlid_all[] = "/eye-lid-all.png";
 const char path_image_shine_iris_right[] = "/shine-iris.png";
 const char path_image_upperlid_right[] = "/eye-lid.png";
@@ -46,6 +47,10 @@ const char path_image_boring_upperlid_left[] = "/boring.png";
 const char path_image_reflex[] = "/reflex.png";
 const char path_image_reflex_left[]= "/reflex-left.png";
 
+const char path_image_heart_reflex[] = "/reflex-heart.png";
+//const char path_image_confused_reflex[] = "/reflex-confused.png";
+const char path_image_confused_reflex[] = "/IMG_4522.png";
+const char path_image_kirakira_reflex[] = "/IMG_4523.png";
 // eye_status ... 0: 通常, 1: 瞬き, 2: 驚き, 3: 眠い, 4: 怒る, 5: 悲しむ・困る, 6: 嬉しい 7:悔しい1 8:悔しい2...
 int eye_status = 0;
 int blink_level = 0; int max_blink_level = 6;
@@ -110,14 +115,14 @@ void setup()
   // if (not nh.getParam("~mode_right", &mode_right))
   if (mode_right)
   {
-    // 右目
-    eye.init(path_image_eyeball, path_image_iris_right,  path_image_upperlid_right, path_image_reflex, image_width, image_height, 7);
+    // 右目 3
+    eye.init(path_image_eyeball, path_image_iris_right,  path_image_upperlid_right, path_image_reflex, image_width, image_height, 3);
     // nh.loginfo("right eye mode_right: %s", &mode_right);
   }
   else
   {
     // 左目にしたいときは7
-    eye.init(path_image_eyeball, path_image_iris_left,  path_image_upperlid_right, path_image_reflex_left, image_width, image_height, 7);
+    eye.init(path_image_eyeball, path_image_iris_left,  path_image_upperlid_right, path_image_reflex_left, image_width, image_height, 3);
     // nh.loginfo("left eye mode_right: %s", &mode_right);
   }
   eye.update_look();
@@ -249,6 +254,45 @@ void loop()
     boring_level += 1;
     if (boring_level == max_boring_level){
       boring_level = 0;
+      eye.ready_for_normal_eye(path_image_iris_right, path_image_upperlid_right, path_image_reflex);
+    }
+    }
+
+    else if (eye_status == 10){
+    // ハート
+    if (shine_level == 0){
+      eye.ready_for_heart_eye(path_image_upperlid_right,path_image_heart_reflex);
+    }
+    eye.heart(look_x, look_y, shine_level);
+    shine_level += 1;
+    if (shine_level == max_shine_level){
+      shine_level = 0;
+      eye.ready_for_normal_eye(path_image_iris_right, path_image_upperlid_right, path_image_reflex);
+    }
+    }
+
+    else if (eye_status == 11){
+    // ぐるぐる
+    if (shine_level == 0){
+      eye.ready_for_guruguru_eye(path_image_upperlid_right,path_image_confused_reflex);
+    }
+    eye.guruguru(look_x, look_y, shine_level);
+    shine_level += 1;
+    if (shine_level == max_shine_level){
+      shine_level = 0;
+      eye.ready_for_normal_eye(path_image_iris_right, path_image_upperlid_right, path_image_reflex);
+    }
+  }
+
+  else if (eye_status == 12){
+    // キラキラ toshima version
+    if (shine_level == 0){
+      eye.ready_for_kirakira_eye(path_image_upperlid_right,path_image_kirakira_reflex);
+    }
+    eye.kirakira(look_x, look_y, shine_level);
+    shine_level += 1;
+    if (shine_level == max_shine_level){
+      shine_level = 0;
       eye.ready_for_normal_eye(path_image_iris_right, path_image_upperlid_right, path_image_reflex);
     }
   }

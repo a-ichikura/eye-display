@@ -92,7 +92,9 @@ public:
   {
     sprite_eye.clear();
     sprite_iris.fillScreen(TFT_WHITE);
+    sprite_reflex.fillScreen(TFT_WHITE);
     const bool success_load_iris_image = sprite_iris.drawPngFile(SPIFFS, path_png_iris);
+    const bool success_load_reflex_image = sprite_reflex.drawPngFile(SPIFFS, path_png_reflex);
     Serial.println(success_load_iris_image);
 
     //kuromitsuには使わない？？
@@ -187,6 +189,54 @@ public:
     const bool success_load_boring_iris_image = sprite_iris.drawPngFile(SPIFFS, path_png_boring_iris);
     Serial.println("boring_eye");
     Serial.println(success_load_boring_iris_image);
+  }
+
+      // ハートの目を描画する準備
+  void ready_for_heart_eye(const char *path_png_shine_upperlid = "*/white.png", const char *path_png_heart_reflex = "/white.png")
+  {
+    sprite_upperlid.clear();
+    sprite_reflex.fillScreen(TFT_WHITE);
+    const bool success_load_upper_image = sprite_upperlid.drawPngFile(SPIFFS, path_png_shine_upperlid);
+    const bool success_load_reflex_image = sprite_reflex.drawPngFile(SPIFFS, path_png_heart_reflex);
+    Serial.println(success_load_reflex_image);
+
+    //sprite_pupil.fillScreen(TFT_WHITE);
+    //sprite_pupil.fillCircle(image_height / 2, image_width / 2, 15, TFT_BLACK);
+      
+    //sprite_reflex.fillScreen(TFT_WHITE);
+    //sprite_reflex.fillCircle(image_height / 2, image_width / 2, 7, TFT_LIGHTGRAY);
+  }
+
+        // ぐるぐるの目を描画する準備
+  void ready_for_guruguru_eye(const char *path_png_shine_upperlid = "*/white.png", const char *path_png_confused_reflex = "/white.png")
+  {
+    sprite_upperlid.clear();
+    sprite_reflex.fillScreen(TFT_WHITE);
+    const bool success_load_upper_image = sprite_upperlid.drawPngFile(SPIFFS, path_png_shine_upperlid);
+    const bool success_load_reflex_image = sprite_reflex.drawPngFile(SPIFFS, path_png_confused_reflex);
+    Serial.println(success_load_reflex_image);
+
+    //sprite_pupil.fillScreen(TFT_WHITE);
+    //sprite_pupil.fillCircle(image_height / 2, image_width / 2, 15, TFT_BLACK);
+      
+    //sprite_reflex.fillScreen(TFT_WHITE);
+    //sprite_reflex.fillCircle(image_height / 2, image_width / 2, 7, TFT_LIGHTGRAY);
+  }
+
+         // キラキラの目を描画する準備
+  void ready_for_kirakira_eye(const char *path_png_shine_upperlid = "*/white.png", const char *path_png_kirakira_reflex = "/white.png")
+  {
+    sprite_upperlid.clear();
+    sprite_reflex.fillScreen(TFT_WHITE);
+    const bool success_load_upper_image = sprite_upperlid.drawPngFile(SPIFFS, path_png_shine_upperlid);
+    const bool success_load_reflex_image = sprite_reflex.drawPngFile(SPIFFS, path_png_kirakira_reflex);
+    Serial.println(success_load_reflex_image);
+
+    //sprite_pupil.fillScreen(TFT_WHITE);
+    //sprite_pupil.fillCircle(image_height / 2, image_width / 2, 15, TFT_BLACK);
+      
+    //sprite_reflex.fillScreen(TFT_WHITE);
+    //sprite_reflex.fillCircle(image_height / 2, image_width / 2, 7, TFT_LIGHTGRAY);
   }
 
 
@@ -349,4 +399,62 @@ public:
 
     sprite_eye.pushRotateZoom(&lcd, lcd.width() >> 1, lcd.height() >> 1, 0, zoom_ratio, zoom_ratio, TFT_WHITE);
   }
+
+    // ハートの目の描画
+  void heart(float dx = 0.0, float dy = 0.0, int shine_level = 0 /*何コマ目か*/,  float scale = 10.0, float random_scale = 5.0)
+  {
+    int upperlid_y_arr[] = {- 130, - 130, -130, -130, 0, 0, -130, -130, -130, -130, 0, -130, -130, 0, -130, -130};
+    long rx = (int)(random_scale * random(100) / 100);
+    long ry = (int)(random_scale * random(100) / 100);
+
+    sprite_eye.clear();
+    sprite_eye.fillScreen(TFT_WHITE);
+    sprite_eyeball.pushSprite(&sprite_eye, 0, 0, TFT_WHITE);
+
+    sprite_iris.pushSprite(&sprite_eye, 0, 0, TFT_WHITE);
+    //sprite_pupil.pushSprite(&sprite_eye, (int)(scale * dx), (int)(scale * dy), TFT_WHITE);
+    sprite_reflex.pushSprite(&sprite_eye, (int)(scale * dx) + rx, (int)(scale * dy) + ry, TFT_WHITE);
+    sprite_upperlid.pushSprite(&sprite_eye, 0, upperlid_y_arr[shine_level], TFT_WHITE);
+    
+    sprite_eye.pushRotateZoom(&lcd, lcd.width() >> 1, lcd.height() >> 1, 0, zoom_ratio, zoom_ratio, TFT_WHITE);
+  }
+
+      // ぐるぐるの目の描画
+  void guruguru(float dx = 0.0, float dy = 0.0, int shine_level = 0 /*何コマ目か*/,  float scale = 10.0, float random_scale = 5.0)
+  {
+    int upperlid_y_arr[] = {- 130, - 130, -130, -130, 0, 0, -130, -130, -130, -130, 0, -130, -130, 0, -130, -130};
+    long rx = (int)(random_scale * random(100) / 100);
+    long ry = (int)(random_scale * random(100) / 100);
+
+    sprite_eye.clear();
+    sprite_eye.fillScreen(TFT_WHITE);
+    sprite_eyeball.pushSprite(&sprite_eye, 0, 0, TFT_WHITE);
+
+    sprite_iris.pushSprite(&sprite_eye, 0, 0, TFT_WHITE);
+    //sprite_pupil.pushSprite(&sprite_eye, (int)(scale * dx), (int)(scale * dy), TFT_WHITE);
+    sprite_reflex.pushSprite(&sprite_eye, (int)(scale * dx) + rx, (int)(scale * dy) + ry, TFT_WHITE);
+    sprite_upperlid.pushSprite(&sprite_eye, 0, upperlid_y_arr[shine_level], TFT_WHITE);
+    
+    sprite_eye.pushRotateZoom(&lcd, lcd.width() >> 1, lcd.height() >> 1, 0, zoom_ratio, zoom_ratio, TFT_WHITE);
+  }
+
+        // キラキラtoshima versionの目の描画
+  void kirakira(float dx = 0.0, float dy = 0.0, int shine_level = 0 /*何コマ目か*/,  float scale = 10.0, float random_scale = 5.0)
+  {
+    int upperlid_y_arr[] = {- 130, - 130, -130, -130, 0, 0, -130, -130, -130, -130, 0, -130, -130, 0, -130, -130};
+    long rx = (int)(random_scale * random(100) / 100);
+    long ry = (int)(random_scale * random(100) / 100);
+
+    sprite_eye.clear();
+    sprite_eye.fillScreen(TFT_WHITE);
+    sprite_eyeball.pushSprite(&sprite_eye, 0, 0, TFT_WHITE);
+
+    sprite_iris.pushSprite(&sprite_eye, 0, 0, TFT_WHITE);
+    //sprite_pupil.pushSprite(&sprite_eye, (int)(scale * dx), (int)(scale * dy), TFT_WHITE);
+    sprite_reflex.pushSprite(&sprite_eye, (int)(scale * dx) + rx, (int)(scale * dy) + ry, TFT_WHITE);
+    sprite_upperlid.pushSprite(&sprite_eye, 0, upperlid_y_arr[shine_level], TFT_WHITE);
+    
+    sprite_eye.pushRotateZoom(&lcd, lcd.width() >> 1, lcd.height() >> 1, 0, zoom_ratio, zoom_ratio, TFT_WHITE);
+  }
+
 };
